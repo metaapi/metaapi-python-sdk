@@ -1,0 +1,11 @@
+venv
+.idea
+**/__pycache__
+source
+build
+.env
+test.log
+dist
+.metaapi
+*.egg-info
+synchronizeManyAccounts
