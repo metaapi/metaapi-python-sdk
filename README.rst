@@ -24,7 +24,7 @@ Working code examples
 =====================
 Please check `this short video <https://youtu.be/LIqFOOOLP-g>`_ to see how you can download samples via our web application.
 
-You can find code examples at `examples folder of our github repo <https://github.com/agiliumtrade-ai/metaapi-python-sdk/tree/master/examples>`_ or in the examples folder of the pip package.
+You can find code examples at `examples folder of our github repo <https://github.com/metaapi/metaapi-python-sdk/tree/master/examples>`_ or in the examples folder of the pip package.
 
 We have composed a `short guide explaining how to use the example code <https://metaapi.cloud/docs/client/usingCodeExamples/>`_
 
@@ -66,24 +66,24 @@ Alternatively, you can retrieve account access token via web UI on https://app.m
 Table of contents
 =================
 
-1. `MT account management <https://github.com/agiliumtrade-ai/metaapi-python-sdk/blob/master/docs/metaApi/managingAccounts.rst>`_
+1. `MT account management <https://github.com/metaapi/metaapi-python-sdk/blob/master/docs/metaApi/managingAccounts.rst>`_
 
-2. `MetaApi RPC API <https://github.com/agiliumtrade-ai/metaapi-python-sdk/blob/master/docs/metaApi/rpcApi.rst>`_
+2. `MetaApi RPC API <https://github.com/metaapi/metaapi-python-sdk/blob/master/docs/metaApi/rpcApi.rst>`_
 
-3. `MetaApi real-time streaming API (websocket API) <https://github.com/agiliumtrade-ai/metaapi-python-sdk/blob/master/docs/metaApi/streamingApi.rst>`_
+3. `MetaApi real-time streaming API (websocket API) <https://github.com/metaapi/metaapi-python-sdk/blob/master/docs/metaApi/streamingApi.rst>`_
 
-4. `Risk management API <https://github.com/agiliumtrade-ai/metaapi-python-sdk/blob/master/docs/riskManagement.rst>`_
+4. `Risk management API <https://github.com/metaapi/metaapi-python-sdk/blob/master/docs/riskManagement.rst>`_
 
-5. `CopyFactory copy trading API <https://github.com/agiliumtrade-ai/metaapi-python-sdk/blob/master/docs/copyTrading.rst>`_
+5. `CopyFactory copy trading API <https://github.com/metaapi/metaapi-python-sdk/blob/master/docs/copyTrading.rst>`_
 
-6. `MetaStats trading statistics API <https://github.com/agiliumtrade-ai/metaapi-python-sdk/blob/master/docs/metaStats.rst>`_
+6. `MetaStats trading statistics API <https://github.com/metaapi/metaapi-python-sdk/blob/master/docs/metaStats.rst>`_
 
-7. `MetaApi MT manager API <https://github.com/agiliumtrade-ai/metaapi-python-sdk/blob/master/docs/managerApi.rst>`_
+7. `MetaApi MT manager API <https://github.com/metaapi/metaapi-python-sdk/blob/master/docs/managerApi.rst>`_
 
-8. `Tracking latencies <https://github.com/agiliumtrade-ai/metaapi-python-sdk/blob/master/docs/trackingLatencies.rst>`_
+8. `Tracking latencies <https://github.com/metaapi/metaapi-python-sdk/blob/master/docs/trackingLatencies.rst>`_
 
-9. `Enable log4js logging <https://github.com/agiliumtrade-ai/metaapi-python-sdk/blob/master/docs/logging.rst>`_
+9. `Enable log4js logging <https://github.com/metaapi/metaapi-python-sdk/blob/master/docs/logging.rst>`_
 
-10. `Rate limits & quotas <https://github.com/agiliumtrade-ai/metaapi-python-sdk/blob/master/docs/rateLimits.rst>`_
+10. `Rate limits & quotas <https://github.com/metaapi/metaapi-python-sdk/blob/master/docs/rateLimits.rst>`_
 
-11. `Token management API <https://github.com/agiliumtrade-ai/metaapi-python-sdk/blob/master/docs/tokenManagementApi.rst>`_
+11. `Token management API <https://github.com/metaapi/metaapi-python-sdk/blob/master/docs/tokenManagementApi.rst>`_

@@ -1,1 +1,1 @@
-CopyFactory code examples have moved to `https://github.com/agiliumtrade-ai/copyfactory-python-sdk/tree/master/examples <https://github.com/agiliumtrade-ai/copyfactory-python-sdk/tree/master/examples>`_
+CopyFactory code examples have moved to `https://github.com/metaapi/copyfactory-python-sdk/tree/master/examples <https://github.com/metaapi/copyfactory-python-sdk/tree/master/examples>`_
