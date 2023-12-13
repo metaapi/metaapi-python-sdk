@@ -1,7 +1,6 @@
 import os
 import asyncio
 from metaapi_cloud_sdk import MetaApi
-from metaapi_cloud_sdk.clients.metaApi.tradeException import TradeException
 from datetime import datetime
 
 # Note: for information on how to use this example code please read https://metaapi.cloud/docs/client/usingCodeExamples
@@ -43,6 +42,7 @@ async def test_meta_api_synchronization():
         print('orders:', terminal_state.orders)
         print('specifications:', terminal_state.specifications)
         print('EURUSD specification:', terminal_state.specification('EURUSD'))
+        await connection.subscribe_to_market_data('EURUSD')
         print('EURUSD price:', terminal_state.price('EURUSD'))
 
         # access history storage
@@ -50,28 +50,37 @@ async def test_meta_api_synchronization():
         print('deals:', history_storage.deals[-5:])
         print('deals with id=1:', history_storage.get_deals_by_ticket('1'))
         print('deals with positionId=1:', history_storage.get_deals_by_position('1'))
-        print('deals for the last day:', history_storage.get_deals_by_time_range(
-            datetime.fromtimestamp(datetime.now().timestamp() - 24 * 60 * 60), datetime.now()))
+        print(
+            'deals for the last day:',
+            history_storage.get_deals_by_time_range(
+                datetime.fromtimestamp(datetime.now().timestamp() - 24 * 60 * 60), datetime.now()
+            ),
+        )
 
         print('history orders:', history_storage.history_orders[-5:])
         print('history orders with id=1:', history_storage.get_history_orders_by_ticket('1'))
         print('history orders with positionId=1:', history_storage.get_history_orders_by_position('1'))
-        print('history orders for the last day:', history_storage.get_history_orders_by_time_range(
-            datetime.fromtimestamp(datetime.now().timestamp() - 24 * 60 * 60), datetime.now()))
+        print(
+            'history orders for the last day:',
+            history_storage.get_history_orders_by_time_range(
+                datetime.fromtimestamp(datetime.now().timestamp() - 24 * 60 * 60), datetime.now()
+            ),
+        )
 
         # calculate margin required for trade
-        print('margin required for trade', await connection.calculate_margin({
-            'symbol': 'GBPUSD',
-            'type': 'ORDER_TYPE_BUY',
-            'volume': 0.1,
-            'openPrice': 1.1
-        }))
+        print(
+            'margin required for trade',
+            await connection.calculate_margin(
+                {'symbol': 'GBPUSD', 'type': 'ORDER_TYPE_BUY', 'volume': 0.1, 'openPrice': 1.1}
+            ),
+        )
 
         # trade
         print('Submitting pending order')
         try:
-            result = await connection.create_limit_buy_order('GBPUSD', 0.07, 1.0, 0.9, 2.0,
-                                                             {'comment': 'comm', 'clientId': 'TE_GBPUSD_7hyINWqAlE'})
+            result = await connection.create_limit_buy_order(
+                'GBPUSD', 0.07, 1.0, 0.9, 2.0, {'comment': 'comm', 'clientId': 'TE_GBPUSD_7hyINWqAlE'}
+            )
             print('Trade successful, result code is ' + result['stringCode'])
         except Exception as err:
             print('Trade failed with error:')
@@ -80,10 +89,12 @@ async def test_meta_api_synchronization():
         if initial_state not in deployed_states:
             # undeploy account if it was undeployed
             print('Undeploying account')
+            await connection.close()
             await account.undeploy()
 
     except Exception as err:
         print(api.format_error(err))
     exit()
+
 
 asyncio.run(test_meta_api_synchronization())

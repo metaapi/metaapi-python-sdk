@@ -57,8 +57,16 @@ Account access token grants access to a single account. You can retrieve account
 .. code-block:: python
 
     account_id = '...'
-    account = await api.metatrader_account_api.get_account(account_id=account_id)
-    account_access_token = account.access_token
+    validity_in_hours = 24
+    account_access_token = await api.token_management_api.narrow_down_token(
+        {
+            'applications': ['trading-account-management-api', 'copyfactory-api', 'metaapi-rest-api', 'metaapi-rpc-api', 'metaapi-real-time-streaming-api', 'metastats-api', 'risk-management-api'],
+            'roles': ['reader'],
+            'resources': [{'entity': 'account', 'id': account_id}]
+
+        },
+        validity_in_hours
+    )
     print(account_access_token)
 
 Alternatively, you can retrieve account access token via web UI on https://app.metaapi.cloud/accounts page (see `this video <https://youtu.be/PKYiDns6_xI>`_).

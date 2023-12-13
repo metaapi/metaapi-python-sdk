@@ -133,7 +133,7 @@ You can subscribe to a stream of tracker events using the tracker event listener
             print('Tracker event', tracker_event)
 
     # add listener
-    listener = Listener()
+    listener = Listener('accountId', 'trackerId1')
     listener_id = risk_management_api.add_tracker_event_listener(listener)
 
     # remove listener
@@ -179,7 +179,7 @@ You can subscribe to a stream of period statistics events using the period stati
             print('Connection lost')
 
     # add listener
-    listener = Listener()
+    listener = Listener('accountId', 'trackerId1')
     listener_id = await risk_management_api.add_period_statistics_listener(listener, 'accountId', 'trackerId1')
 
     # remove listener
@@ -218,8 +218,8 @@ Streaming equity chart events
             print('Connection lost')
 
     # add listener
-    listener = Listener()
-    listener_id = risk_management_api.add_equity_chart_listener(listener, 'accountId')
+    listener = Listener('accountId')
+    listener_id = await risk_management_api.add_equity_chart_listener(listener, 'accountId')
 
     # remove listener
     risk_management_api.remove_equity_chart_listener(listener_id)
@@ -249,8 +249,8 @@ You can subscribe to a stream of equity/balance events using the equity balance 
             print('Connection lost')
 
     # add listener
-    listener = Listener()
-    listener_id = risk_management_api.add_equity_balance_listener(listener, 'accountId')
+    listener = Listener('accountId')
+    listener_id = await risk_management_api.add_equity_balance_listener(listener, 'accountId')
 
     # remove listener
     risk_management_api.remove_equity_balance_listener(listener_id)

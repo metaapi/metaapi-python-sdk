@@ -15,4 +15,4 @@ exclude examples/synchronizeManyAccounts/.env
 prune examples/synchronizeManyAccounts/.metaapi
 exclude examples/copyFactory/.env
 prune examples/copyFactory/.metaapi
-
+global-exclude .DS_Store

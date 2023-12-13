@@ -30,14 +30,16 @@ async def main():
         risk_management_api = risk_management.risk_management_api
 
         # adding an equity balance listener
-        equity_balance_listener = ExampleEquityBalanceListener()
+        equity_balance_listener = ExampleEquityBalanceListener(account_id)
         listener_id = await risk_management_api.add_equity_balance_listener(equity_balance_listener, account_id)
 
         print('Streaming equity balance for 1 minute...')
         await asyncio.sleep(60)
         risk_management_api.remove_equity_balance_listener(listener_id)
+        print('Listener removed')
     except Exception as err:
         print(RiskManagement.format_error(err))
     exit()
+
 
 asyncio.run(main())

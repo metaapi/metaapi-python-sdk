@@ -34,7 +34,7 @@ async def main():
         risk_management_api = risk_management.risk_management_api
 
         # adding an equity chart listener
-        equity_chart_listener = ExampleEquityChartListener()
+        equity_chart_listener = ExampleEquityChartListener(account_id)
         listener_id = await risk_management_api.add_equity_chart_listener(equity_chart_listener, account_id)
 
         print('Streaming equity chart events for 1 minute...')
@@ -46,5 +46,6 @@ async def main():
     except Exception as err:
         print(RiskManagement.format_error(err))
     exit()
+
 
 asyncio.run(main())

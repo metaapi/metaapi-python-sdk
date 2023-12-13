@@ -35,19 +35,18 @@ async def main():
     try:
         risk_management = RiskManagement(token, {'domain': domain})
         risk_management_api = risk_management.risk_management_api
-        
+
         # creating a tracker
-        tracker_id = await risk_management_api.create_tracker(account_id, {
-            'name': 'example-tracker',
-            'absoluteDrawdownThreshold': 5,
-            'period': 'day'
-        })
+        tracker_id = await risk_management_api.create_tracker(
+            account_id, {'name': 'example-tracker-5', 'absoluteDrawdownThreshold': 5, 'period': 'day'}
+        )
         print('Created an event tracker ' + tracker_id['id'])
 
         # adding a period statistics listener
-        period_statistics_listener = ExamplePeriodStatisticsListener()
-        listener_id = await risk_management_api.add_period_statistics_listener(period_statistics_listener, account_id,
-                                                                               tracker_id['id'])
+        period_statistics_listener = ExamplePeriodStatisticsListener(account_id, tracker_id['id'])
+        listener_id = await risk_management_api.add_period_statistics_listener(
+            period_statistics_listener, account_id, tracker_id['id']
+        )
 
         print('Streaming period statistics events for 1 minute...')
         await asyncio.sleep(60)
@@ -58,5 +57,6 @@ async def main():
     except Exception as err:
         print(RiskManagement.format_error(err))
     exit()
+
 
 asyncio.run(main())

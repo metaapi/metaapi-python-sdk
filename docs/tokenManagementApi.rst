@@ -2,7 +2,7 @@ Token Management API
 ####################
 Generating token to use in Web or Mobile applications
 =====================================================
-A typical admin token generated with `MetaApi Web application <https://app.metaapi.cloud/token>`_ is usually allowed to access all MetaApi resources. Thus such token might be unsafe to be used in a web or mobile app, because a user can capture the token from the application and then be able to perform unwanted actions on his own. We introduced token management api to SDK so that you can create new token that would be safe to use in your Web or Mobile applications. This is achieved by narrowing down permissions of your admin token.
+A typical admin token generated with `MetaApi Web application <https://app.metaapi.cloud/generate-token>`_ is usually allowed to access all MetaApi resources. Thus such token might be unsafe to be used in a web or mobile app, because a user can capture the token from the application and then be able to perform unwanted actions on his own. We introduced token management api to SDK so that you can create new token that would be safe to use in your Web or Mobile applications. This is achieved by narrowing down permissions of your admin token.
 There are 2 styles of this API - simplified and detailed.
 
 Simplified TokenManagement API

@@ -3,7 +3,6 @@ import asyncio
 from metaapi_cloud_sdk import MetaApi
 from datetime import datetime
 
-from metaapi_cloud_sdk.clients.metaApi.tradeException import TradeException
 # Note: for information on how to use this example code please read https://metaapi.cloud/docs/client/usingCodeExamples/
 
 token = os.getenv('TOKEN') or '<put in your token here>'
@@ -16,25 +15,28 @@ async def meta_api_synchronization():
     api = MetaApi(token)
     try:
         # Add test MetaTrader account
-        accounts = await api.metatrader_account_api.get_accounts()
+        accounts = await api.metatrader_account_api.get_accounts_with_infinite_scroll_pagination()
         account = None
         for item in accounts:
             if item.login == login and item.type.startswith('cloud'):
                 account = item
                 break
         if not account:
-            print('Adding MT4 account to MetaApi')
-            account = await api.metatrader_account_api.create_account({
-                'name': 'Test account',
-                'type': 'cloud',
-                'login': login,
-                'password': password,
-                'server': server_name,
-                'platform': 'mt4',
-                'magic': 1000
-            })
+            print('Adding MT5 account to MetaApi')
+            account = await api.metatrader_account_api.create_account(
+                {
+                    'name': 'Test account',
+                    'type': 'cloud',
+                    'login': login,
+                    'password': password,
+                    'server': server_name,
+                    'platform': 'mt5',
+                    'application': 'MetaApi',
+                    'magic': 1000,
+                }
+            )
         else:
-            print('MT4 account already added to MetaApi')
+            print('MT5 account already added to MetaApi')
 
         #  wait until account is deployed and connected to broker
         print('Deploying account')
@@ -48,7 +50,7 @@ async def meta_api_synchronization():
 
         # wait until terminal state synchronized to the local state
         print('Waiting for SDK to synchronize to terminal state (may take some time depending on your history size)')
-        await connection.wait_synchronized()
+        await connection.wait_synchronized({'timeoutInSeconds': 600})
 
         # access local copy of terminal state
         print('Testing terminal state access')
@@ -66,38 +68,47 @@ async def meta_api_synchronization():
         print('deals:', history_storage.deals[-5:])
         print('deals with id=1:', history_storage.get_deals_by_ticket('1'))
         print('deals with positionId=1:', history_storage.get_deals_by_position('1'))
-        print('deals for the last day:', history_storage.get_deals_by_time_range(
-            datetime.fromtimestamp(datetime.now().timestamp() - 24 * 60 * 60), datetime.now()))
+        print(
+            'deals for the last day:',
+            history_storage.get_deals_by_time_range(
+                datetime.fromtimestamp(datetime.now().timestamp() - 24 * 60 * 60), datetime.now()
+            ),
+        )
 
         print('history orders:', history_storage.history_orders[-5:])
         print('history orders with id=1:', history_storage.get_history_orders_by_ticket('1'))
         print('history orders with positionId=1:', history_storage.get_history_orders_by_position('1'))
-        print('history orders for the last day:', history_storage.get_history_orders_by_time_range(
-            datetime.fromtimestamp(datetime.now().timestamp() - 24 * 60 * 60), datetime.now()))
+        print(
+            'history orders for the last day:',
+            history_storage.get_history_orders_by_time_range(
+                datetime.fromtimestamp(datetime.now().timestamp() - 24 * 60 * 60), datetime.now()
+            ),
+        )
 
         await connection.subscribe_to_market_data('EURUSD')
         print('EURUSD price:', terminal_state.price('EURUSD'))
 
         # calculate margin required for trade
-        print('margin required for trade', await connection.calculate_margin({
-            'symbol': 'GBPUSD',
-            'type': 'ORDER_TYPE_BUY',
-            'volume': 0.1,
-            'openPrice': 1.1
-        }))
+        print(
+            'margin required for trade',
+            await connection.calculate_margin(
+                {'symbol': 'GBPUSD', 'type': 'ORDER_TYPE_BUY', 'volume': 0.1, 'openPrice': 1.1}
+            ),
+        )
 
         # trade
         print('Submitting pending order')
         try:
-            result = await connection.create_limit_buy_order('GBPUSD', 0.07, 1.0, 0.9, 2.0,
-                                                             {'comment': 'comm', 'clientId': 'TE_GBPUSD_7hyINWqAlE'})
+            result = await connection.create_limit_buy_order(
+                'GBPUSD', 0.07, 1.0, 0.9, 2.0, {'comment': 'comm', 'clientId': 'TE_GBPUSD_7hyINWqAlE'}
+            )
             print('Trade successful, result code is ' + result['stringCode'])
         except Exception as err:
             print('Trade failed with error:')
             print(api.format_error(err))
 
         # finally, undeploy account after the test
-        print('Undeploying MT4 account so that it does not consume any unwanted resources')
+        print('Undeploying MT5 account so that it does not consume any unwanted resources')
         await connection.close()
         await account.undeploy()
 
@@ -118,5 +129,6 @@ async def meta_api_synchronization():
                 print(err)
         print(api.format_error(err))
     exit()
+
 
 asyncio.run(meta_api_synchronization())

@@ -3,24 +3,43 @@ import asyncio
 from metaapi_cloud_sdk import MetaApi
 from datetime import datetime, timedelta
 
-# Note: for information on how to use this example code please read https://metaapi.cloud/docs/client/usingCodeExamples
+# Note: for information on how to use this example code please read https://metaapi.cloud/docs/client/usingCodeExamples/
 
 token = os.getenv('TOKEN') or '<put in your token here>'
-accountId = os.getenv('ACCOUNT_ID') or '<put in your account id here>'
+login = os.getenv('LOGIN') or '<put in your MT login here>'
+password = os.getenv('PASSWORD') or '<put in your MT password here>'
+server_name = os.getenv('SERVER') or '<put in your MT server name here>'
 
 
-async def test_meta_api_synchronization():
+async def meta_api_synchronization():
     api = MetaApi(token)
     try:
-        account = await api.metatrader_account_api.get_account(accountId)
-        initial_state = account.state
-        deployed_states = ['DEPLOYING', 'DEPLOYED']
+        # Add test MetaTrader account
+        accounts = await api.metatrader_account_api.get_accounts_with_infinite_scroll_pagination()
+        account = None
+        for item in accounts:
+            if item.login == login and item.type.startswith('cloud'):
+                account = item
+                break
+        if not account:
+            print('Adding MT4 account to MetaApi')
+            account = await api.metatrader_account_api.create_account(
+                {
+                    'name': 'Test account',
+                    'type': 'cloud',
+                    'login': login,
+                    'password': password,
+                    'server': server_name,
+                    'platform': 'mt4',
+                    'magic': 1000,
+                }
+            )
+        else:
+            print('MT4 account already added to MetaApi')
 
-        if initial_state not in deployed_states:
-            #  wait until account is deployed and connected to broker
-            print('Deploying account')
-            await account.deploy()
-
+        #  wait until account is deployed and connected to broker
+        print('Deploying account')
+        await account.deploy()
         print('Waiting for API server to connect to broker (may take couple of minutes)')
         await account.wait_connected()
 
@@ -53,6 +72,7 @@ async def test_meta_api_synchronization():
             'history deals (~last 3 months):',
             await connection.get_deals_by_time_range(datetime.utcnow() - timedelta(days=90), datetime.utcnow()),
         )
+
         print('server time', await connection.get_server_time())
 
         # calculate margin required for trade
@@ -73,15 +93,28 @@ async def test_meta_api_synchronization():
         except Exception as err:
             print('Trade failed with error:')
             print(api.format_error(err))
-        if initial_state not in deployed_states:
-            # undeploy account if it was undeployed
-            print('Undeploying account')
-            await connection.close()
-            await account.undeploy()
 
+        # finally, undeploy account after the test
+        print('Undeploying MT4 account so that it does not consume any unwanted resources')
+        await connection.close()
+        await account.undeploy()
     except Exception as err:
+        # process errors
+        if hasattr(err, 'details'):
+            # returned if the server file for the specified server name has not been found
+            # recommended to check the server name or create the account using a provisioning profile
+            if err.details == 'E_SRV_NOT_FOUND':
+                print(err)
+            # returned if the server has failed to connect to the broker using your credentials
+            # recommended to check your login and password
+            elif err.details == 'E_AUTH':
+                print(err)
+            # returned if the server has failed to detect the broker settings
+            # recommended to try again later or create the account using a provisioning profile
+            elif err.details == 'E_SERVER_TIMEZONE':
+                print(err)
         print(api.format_error(err))
     exit()
 
 
-asyncio.run(test_meta_api_synchronization())
+asyncio.run(meta_api_synchronization())

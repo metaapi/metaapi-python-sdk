@@ -32,7 +32,7 @@ Provisioning profile id must not be included in the request for automatic broker
           'magic': 123456,
           'keywords': ["Raw Trading Ltd"],
           'quoteStreamingIntervalInSeconds': 2.5, # set to 0 to receive quote per tick
-          'reliability': 'regular' # set this field to 'high' value if you want to increase uptime of your account (recommended for production environments)
+          'reliability': 'high' # set this field to 'high' value if you want to increase uptime of your account (recommended for production environments)
         })
     except Exception as err:
         # process errors
@@ -126,24 +126,78 @@ To create an account using a provisioning profile, create a provisioning profile
       'provisioningProfileId': provisioningProfile.id,
       'magic': 123456,
       'quoteStreamingIntervalInSeconds': 2.5, # set to 0 to receive quote per tick
-      'reliability': 'regular' # set this field to 'high' value if you want to increase uptime of your account (recommended for production environments)
+      'reliability': 'high' # set this field to 'high' value if you want to increase uptime of your account (recommended for production environments)
     })
+
+Account configuration by end user
+------------------------------------
+MetaApi supports trading account configuration by end user. If you do not specify trading account login and password in the createAccount method payload the account will be created in a DRAFT state. You then can generate a link your user can use to enter account login and password or change the account password.
+
+.. code-block:: python
+
+    account = await api.metatrader_account_api.create_account(account={
+      'name': 'Trading account #1',
+      'type': 'cloud',
+      'server': 'ICMarketsSC-Demo',
+      'provisioningProfileId': provisioningProfile.id,
+      'application': 'MetaApi',
+      'magic': 123456,
+      'quoteStreamingIntervalInSeconds': 2.5, # set to 0 to receive quote per tick
+      'reliability': 'high' # set this field to 'high' value if you want to increase uptime of your account (recommended for production environments)
+    })
+    configuration_link = await account.create_configuration_link(ttl_in_days=7)
 
 Retrieving existing accounts via API
 ------------------------------------
+
+Method ``get_accounts_with_infinite_scroll_pagination`` provides pagination in a classic style which allows you to calculate page count.
+
 .. code-block:: python
 
     # filter and paginate accounts, see doc for full list of filter options available
-    accounts = await api.metatrader_account_api.get_accounts(accounts_filter={
+    accounts = await api.metatrader_account_api.get_accounts_with_infinite_scroll_pagination(accounts_filter={
         'limit': 10,
         'offset': 0,
         'query': 'ICMarketsSC-MT5',
         'state': ['DEPLOYED']
     })
-    # get accounts without filter (returns 1000 accounts max)
-    accounts = await api.metatrader_account_api.get_accounts();
 
-    account = await api.metatrader_account_api.get_account(account_id='accountId')
+    # get accounts without filter (returns 1000 accounts max)
+    accounts = await api.metatrader_account_api.get_accounts_with_infinite_scroll_pagination()
+    account = None
+
+    for acc in accounts['items']]:
+      if acc.id == 'accountId':
+        account = acc
+        break
+
+Method ``get_accounts_with_classic_scroll_pagination`` provides pagination in a classic style which allows you to calculate page count.
+
+.. code-block:: python
+
+    # filter and paginate accounts, see doc for full list of filter options available
+    accounts = await api.metatrader_account_api.get_accounts_with_classic_scroll_pagination(accounts_filter={
+        'limit': 10,
+        'offset': 0,
+        'query': 'ICMarketsSC-MT5',
+        'state': ['DEPLOYED']
+    })
+    account = None
+
+    for acc in accounts['items']]:
+      if acc.id == 'accountId':
+        account = acc
+        break
+    # number of all accounts matching filter without pagination options
+    print(accounts['count'])
+    # get accounts without filter (returns 1000 accounts max)
+    accounts = await api.metatrader_account_api.get_accounts_with_classic_scroll_pagination();
+
+Method ``get_account`` retrieves account by account id.
+
+.. code-block:: python
+
+    account = await api.metatrader_account_api.get_account('accountId')
 
 Updating an existing account via API
 ------------------------------------
@@ -253,10 +307,57 @@ Creating a provisioning profile via API
 
 Retrieving existing provisioning profiles via API
 -------------------------------------------------
+
+Method ``get_provisioning_profiles_with_infinite_scroll_pagination`` provides pagination in infinite scroll style.
+
 .. code-block:: python
 
-    provisioningProfiles = await api.provisioning_profile_api.get_provisioning_profiles()
-    provisioningProfile = await api.provisioning_profile_api.get_provisioning_profile(provisioning_profile_id='profileId')
+    # filter and paginate profiles, see doc for full list of filter options available
+    provisioningProfiles = await api.provisioning_profile_api.get_provisioning_profiles_with_infinite_scroll_pagination({
+        'limit': 10,
+        'offset': 0,
+        'query': 'ICMarketsSC-MT5', # searches over name
+        'version': 5
+    })
+
+    # get profiles without filter (returns 1000 profiles max)
+    provisioningProfiles = await api.provisioning_profile_api.get_provisioning_profiles_with_infinite_scroll_pagination()
+    provisioningProfile = None
+
+    for profile in provisioningProfiles:
+        if profile.id == 'profileId':
+          provisioningProfile = profile
+          break
+
+Method ``get_provisioning_profiles_with_classic_pagination`` provides pagination in a classic style which allows you to calculate page count.
+
+.. code-block:: python
+
+    # filter and paginate profiles, see doc for full list of filter options available
+    provisioningProfiles = await api.provisioning_profile_api.get_provisioning_profiles_with_classic_pagination({
+        'limit': 10,
+        'offset': 0,
+        'query': 'ICMarketsSC-MT5', # searches over name
+        'version': 5
+    })
+    provisioningProfile = None
+
+    for profile in provisioningProfiles['items']:
+        if profile.id == 'profileId':
+          provisioningProfile = profile
+          break
+
+    # number of all profiles matching filter without pagination options
+    print(provisioningProfiles['count'])
+
+    # get profiles without filter (returns 1000 profiles max)
+    provisioningProfiles = await api.provisioning_profile_api.get_provisioning_profiles_with_classic_pagination()
+
+Method ``get_provisioning_profile`` retrieves profile by profile id.
+
+.. code-block:: python
+
+    provisioningProfile = await api.provisioning_profile_api.get_provisioning_profile('profileId')
 
 Updating a provisioning profile via API
 ---------------------------------------
