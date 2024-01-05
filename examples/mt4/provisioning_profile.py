@@ -4,7 +4,7 @@ from metaapi_cloud_sdk import MetaApi
 
 # Note: for information on how to use this example code please read https://metaapi.cloud/docs/client/usingCodeExamples/
 # It is recommended to create accounts with automatic broker settings detection instead,
-# see mt4_real_time_streaming.py
+# see real_time_streaming.py
 
 token = os.getenv('TOKEN') or '<put in your token here>'
 login = os.getenv('LOGIN') or '<put in your MT login here>'
