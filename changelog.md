@@ -1,4 +1,8 @@
+27.0.1
+  - increase version to retry a broken release
+
 27.0.0
+  - breaking change: migrate to Python 3.8
   - breaking change: change modules naming method
   - synchronized with JavaScript SDK 27.0.0
   - breaking change: removed `MetatraderAccount.access_token` getter
