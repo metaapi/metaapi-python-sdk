@@ -1,3 +1,6 @@
+27.0.2
+  - fix broker release
+
 27.0.1
   - increase version to retry a broken release
 

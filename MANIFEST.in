@@ -1,4 +1,5 @@
-graft lib examples
+graft lib
+graft examples
 include LICENSE changelog.md
 exclude .gitlab-ci.yml development.md examples/**/.env
 prune examples/**/.metaapi
