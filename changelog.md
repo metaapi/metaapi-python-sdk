@@ -1,3 +1,6 @@
+27.0.4
+  - fixed trailingStopLoss docs
+
 27.0.3
   - add missing re-exports
 

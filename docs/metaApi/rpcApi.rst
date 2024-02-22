@@ -143,16 +143,15 @@ same time. You can find the full description here:
     # threshold trailing stop loss
     print(await connection.create_market_buy_order('GBPUSD', 0.07, 0.9, 2.0, {
         'trailingStopLoss': {
-            'thresholds': [
-                {
-                    'threshold": 50,
-                    'stopLoss": 100
-                },
-                {
-                    'threshold": 100,
-                    'stopLoss": 50
-                }
-            ],
-            'units': 'RELATIVE_POINTS'
+            'threshold': {
+                'thresholds': [
+                    {
+                        'threshold': 1.3,
+                        'stopLoss': 1.1
+                    }
+                ],
+                'units': 'ABSOLUTE_PRICE',
+                'stopPriceBase': 'CURRENT_PRICE'
+            }
         }
     }))
