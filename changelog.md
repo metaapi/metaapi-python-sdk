@@ -1,3 +1,6 @@
+27.0.5
+  - update httpx dependency to 0.27.0
+
 27.0.4
   - fixed trailingStopLoss docs
 
