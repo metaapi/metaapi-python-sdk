@@ -1,3 +1,6 @@
+27.1.0
+  - added dedicated IPs support
+
 27.0.5
   - update httpx dependency to 0.27.0
 
