@@ -1,3 +1,8 @@
+28.0.0
+  - breaking change: updated copyfactory dependency
+  - fix terminology
+  - fix removed positions tracking bug
+
 27.1.1
   - removed excessive logging errors about subscriptions and synchronization
 

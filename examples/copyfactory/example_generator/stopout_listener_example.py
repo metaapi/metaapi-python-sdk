@@ -6,7 +6,7 @@ from metaapi_cloud_sdk import CopyFactory, StopoutListener
 # your MetaApi API token
 token = os.getenv('TOKEN') or '<put in your token here>'
 # your subscriber MetaApi account id
-account_id = os.getenv('SLAVE_ACCOUNT_ID') or '<put in your slaveAccountId here>'
+account_id = os.getenv('SUBSCRIBER_ACCOUNT_ID') or '<put in your subscriberAccountId here>'
 
 
 async def stopout_example():
