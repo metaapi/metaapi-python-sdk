@@ -1,3 +1,7 @@
+28.0.1
+  - fix position profit calculations 
+  - added copyfactory webhook example code
+
 28.0.0
   - breaking change: updated copyfactory dependency
   - fix terminology
