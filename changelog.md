@@ -1,3 +1,6 @@
+28.0.2
+  - added swap rates to specification model
+
 28.0.1
   - fix position profit calculations 
   - added copyfactory webhook example code
