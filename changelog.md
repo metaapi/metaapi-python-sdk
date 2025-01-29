@@ -1,3 +1,6 @@
+28.0.3
+  - added date conversion error logging
+
 28.0.2
   - added swap rates to specification model
 
