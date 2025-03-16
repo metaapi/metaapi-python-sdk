@@ -1,3 +1,17 @@
+28.0.6
+  - fix latency reservoir calculations
+
+28.0.5
+  - improve risk management tracking period docs
+  - added pending order expiration examples and docs
+
+28.0.4
+  - fix `comment` and `clientId` descriptions
+  - fix `MetatraderSymbolSpecification.fillingModes` field name and description
+  - fix `MetatraderSymbolSpecification.hedgedMargin` to be optional
+  - fix `MetatraderSymbolSpecification.orderGTCMode` to be optional
+  - fix `MetatraderAccountInformation.accountCurrencyExchangeRate` updates in `TerminalState`
+
 28.0.3
   - added date conversion error logging
 

@@ -8,7 +8,7 @@ which have to enforce trading risk restrictions.
 MetaApi risk management API is a member of MetaApi project (`https://metaapi.cloud <https://metaapi.cloud>`_),
 a powerful cloud forex trading API which supports both MetaTrader 4 and MetaTrader 5 platforms.
 
-MetaApi is a paid service, however API access to one MetaTrader account is free of charge.
+MetaApi is a paid service, however we may offer a free tier access in some cases.
 
 The `MetaApi pricing <https://metaapi.cloud/#pricing>`_ was developed with the intent to make your charges less or equal
 to what you would have to pay for hosting your own infrastructure. This is possible because over time we managed to heavily

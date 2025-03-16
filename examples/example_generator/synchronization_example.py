@@ -1,7 +1,7 @@
 import os
 import asyncio
 from metaapi_cloud_sdk import MetaApi
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Note: for information on how to use this example code please read https://metaapi.cloud/docs/client/usingCodeExamples
 
@@ -79,7 +79,14 @@ async def test_meta_api_synchronization():
         print('Submitting pending order')
         try:
             result = await connection.create_limit_buy_order(
-                'GBPUSD', 0.07, 1.0, 0.9, 2.0, {'comment': 'comm', 'clientId': 'TE_GBPUSD_7hyINWqAlE'}
+                'GBPUSD', 0.07, 1.0, 0.9, 2.0, {
+                    'comment': 'comm',
+                    'clientId': 'TE_GBPUSD_7hyINWqAlE',
+                    'expiration': {
+                        'type': 'ORDER_TIME_SPECIFIED',
+                        'time': datetime.now() + timedelta(days=1)
+                    }
+                }
             )
             print('Trade successful, result code is ' + result['stringCode'])
         except Exception as err:
