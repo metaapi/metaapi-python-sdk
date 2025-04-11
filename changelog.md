@@ -1,3 +1,6 @@
+28.0.7
+  - fix backup `MethodAccessException` message
+
 28.0.6
   - fix latency reservoir calculations
 
