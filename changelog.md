@@ -1,3 +1,9 @@
+29.0.0
+  - breaking change: update httpx dependency to 0.28.0
+
+28.0.8
+  - fix package distribution management
+
 28.0.7
   - fix backup `MethodAccessException` message
 

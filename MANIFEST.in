@@ -3,4 +3,4 @@ graft examples
 include LICENSE changelog.md
 exclude .gitlab-ci.yml development.md examples/**/.env
 prune examples/**/.metaapi
-global-exclude .DS_Store
+global-exclude .DS_Store servers.dat tradeview-demo.broker.srv *_test.py
