@@ -1,3 +1,6 @@
+29.1.0
+  - added a file logger for SocketIO log output
+
 29.0.0
   - breaking change: update httpx dependency to 0.28.0
 
