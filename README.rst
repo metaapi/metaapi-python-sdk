@@ -95,3 +95,5 @@ Table of contents
 10. `Rate limits & quotas <https://github.com/metaapi/metaapi-python-sdk/blob/master/docs/rateLimits.rst>`_
 
 11. `Token management API <https://github.com/metaapi/metaapi-python-sdk/blob/master/docs/tokenManagementApi.rst>`_
+
+12. `Debugging <https://github.com/metaapi/metaapi-python-sdk/blob/master/docs/debugging.rst>`_

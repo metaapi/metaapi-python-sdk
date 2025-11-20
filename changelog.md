@@ -1,3 +1,6 @@
+29.1.1
+  - added warning to TimeoutException if no running event loop
+
 29.1.0
   - added a file logger for SocketIO log output
 
