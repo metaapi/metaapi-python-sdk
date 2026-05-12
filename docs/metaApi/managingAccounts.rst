@@ -389,10 +389,10 @@ Create a MetaTrader 4 demo account
             'accountType': 'type',
             'email': 'example@example.com',
             'leverage': 100,
-            'serverName': 'Exness-Trial4',
+            'serverName': 'Example-Server',
             'name': 'Test User',
             'phone': '+12345678901',
-            'keywords': ["Exness Technologies Ltd"]
+            'keywords': ["Example Broker Ltd"]
         })
 
     # optionally specify a provisioning profile id if servers file is not found by server name
@@ -402,7 +402,7 @@ Create a MetaTrader 4 demo account
             'accountType': 'type',
             'email': 'example@example.com',
             'leverage': 100,
-            'serverName': 'Exness-Trial4',
+            'serverName': 'Example-Server',
             'name': 'Test User',
             'phone': '+12345678901'
         }, profile_id=provisioningProfile.id)
@@ -429,7 +429,7 @@ Create a MetaTrader 5 demo account
             'balance': 100000,
             'email': 'example@example.com',
             'leverage': 100,
-            'serverName': 'Exness-Trial4',
+            'serverName': 'Example-Server',
             'name': 'Test User',
             'phone': '+12345678901'
         }, profile_id=provisioningProfile.id)
